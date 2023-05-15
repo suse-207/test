@@ -1,0 +1,104 @@
+/*@!Encoding:936*/
+includes
+{
+  
+}
+
+variables
+{
+  message 0x140 msg1={dlc=8};  //   定义了ID为0x140长度为8的消息
+  message 0x150 msg2={dlc=8};   //  定义了ID为0X150长度为8的消息
+  message 0X42A msg3={dlc=8};   
+  msTimer timer1;               
+  msTimer timer2;              
+  msTimer timer4;
+  timer  timer3;              //  取消定时器 
+}
+
+on preStart
+{
+
+}
+
+on start
+{
+  setTimer(timer1,100);
+  setTimer(timer2,100);  
+  setTimer(timer4,100);
+  setTimer(timer3,100); //  报文发送暂停
+}
+
+
+
+on timer timer3
+{
+  cancelTimer(timer1);
+  cancelTimer(timer2);
+  cancelTimer(timer4);
+}
+
+
+on timer timer1
+{
+  int i=0;
+  msg1.byte(0)=random(3);
+  msg1.byte(1)=random(7);
+  msg1.byte(2)=random(9);
+  msg1.byte(4)=random(13);
+  msg1.byte(5)=random(20);
+  msg1.byte(6)=random(5);
+  msg1.byte(7)=random(8);
+  
+  if(i==8){i=0;}
+  msg1.byte(3)=i+1;
+  output(msg1);
+  i++;
+  setTimer(timer1,100);
+}
+
+
+on timer timer2
+{
+  int i=0;
+  msg2.byte(0)=random(13);
+  msg2.byte(1)=random(15);
+  msg2.byte(2)=random(17);
+  msg2.byte(3)=random(21);
+  msg2.byte(5)=random(25);
+  msg2.byte(6)=random(30);
+  msg2.byte(7)=random(8);
+  
+  if(i==8){i=0;}
+  msg1.byte(4)=i+1;
+  output(msg2);
+  i++;
+  setTimer(timer2,100);
+}
+
+
+on timer timer4
+{
+  int i=0;
+  msg3.byte(0)=0xD8;
+  msg3.byte(1)=0X50;
+  msg3.byte(2)=0X78;
+  msg3.byte(3)=0XE0;
+  msg3.byte(5)=0;
+  msg3.byte(6)=0;
+  msg3.byte(7)=0;
+  
+  if(i==8){i=0;}
+  msg1.byte(4)=i+1;
+  output(msg3);
+  i++;
+  setTimer(timer4,100);
+}
+
+
+
+
+
+
+
+
+

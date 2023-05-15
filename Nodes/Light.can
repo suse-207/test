@@ -1,0 +1,102 @@
+/*@!Encoding:936*/
+includes
+{
+  
+}
+
+variables
+{
+  
+}
+
+on message Msg1
+{
+  //  读取报文的信号 bsSwitch值，并赋值给系统变量svLight
+  //sysSetVariableInt(sysvar::MyNamespace::syLight,this.bsSwitch);
+  
+  int a;
+  
+  a=this.bsSwitch;
+
+  switch(a)
+  {
+    
+    case 0 : sysSetVariableInt(sysvar::MyNamespace::testlight,0);write("在switch里边");break;
+    case 1 : sysSetVariableInt(sysvar::MyNamespace::testlight,1);break;  
+  }
+
+}
+
+on message Msg2
+{
+   int b;
+   b=this.bsData;
+  
+   if(b)
+  {
+    sysSetVariableInt(sysvar::MyNamespace::syLight,1);
+    sysSetVariableInt(sysvar::MyNamespace::syLight1,1);
+    sysSetVariableInt(sysvar::MyNamespace::syLight2,1);
+    sysSetVariableInt(sysvar::MyNamespace::syLight3,1);
+    sysSetVariableInt(sysvar::MyNamespace::syLight4,1);
+    sysSetVariableInt(sysvar::MyNamespace::syLight5,1);
+    sysSetVariableInt(sysvar::MyNamespace::syLight6,1);
+    sysSetVariableInt(sysvar::MyNamespace::syLight7,1);
+    sysSetVariableInt(sysvar::MyNamespace::testlight,0);
+  }
+}
+
+on message 0x130
+{
+    int a;
+    a=this.byte(0);
+    switch(a)
+    {
+      case 1 : write("Light中a的值为：%d\n",a);
+               sysSetVariableInt(sysvar::MyNamespace::syLight,1);break;
+        
+      case 2 : write("Light中a的值为：%d\n",a);
+               sysSetVariableInt(sysvar::MyNamespace::syLight,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight1,1); break;
+        
+      case 3 : write("Light中a的值为：%d\n",a);
+               sysSetVariableInt(sysvar::MyNamespace::syLight,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight1,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight2,1); break;
+        
+      case 4 : write("Light中a的值为：%d\n",a);
+               sysSetVariableInt(sysvar::MyNamespace::syLight,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight1,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight2,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight3,1); break;
+        
+      case 5 : write("Light中a的值为：%d\n",a);
+               sysSetVariableInt(sysvar::MyNamespace::syLight,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight1,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight2,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight3,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight4,1); break;
+        
+        
+        
+      case 6 : write("Light中a的值为：%d\n",a);
+               sysSetVariableInt(sysvar::MyNamespace::syLight,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight1,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight2,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight3,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight4,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight5,1); break;
+                
+        
+      case 7 : write("Light中a的值为：%d\n",a);
+               sysSetVariableInt(sysvar::MyNamespace::syLight,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight1,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight2,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight3,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight4,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight5,1);
+               sysSetVariableInt(sysvar::MyNamespace::syLight6,1); break;
+     
+    }
+    
+}

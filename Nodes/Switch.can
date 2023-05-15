@@ -1,0 +1,103 @@
+/*@!Encoding:936*/
+includes
+{
+  
+}
+
+variables
+{
+  message Msg1 msg1;
+  message Msg2 msg2;
+  msTimer timer1;
+  timer   timer3;
+  timer   timer2; //设置延迟函数
+  message 0x130 msg3={dlc=7};  // 定义了ID为0x130长度为7的消息
+  
+}
+
+on preStart
+{
+  write("This is my first CANoe Simulation!\n");
+  
+}
+
+on start
+{
+  //setTimerCyclic(timer1,1000); // (定时器名称，定时时间)
+  setTimer(timer3,60);           //  定时器 10秒1次
+  setTimer(timer2,422);           //  第7秒执行Timer 将所有的灯点亮
+  
+  setTimer(timer1,600);          //  检测灯闪烁
+  write("初始化成功,开始检测！\n");
+}
+
+
+
+on stopMeasurement
+{
+  
+  //  结束测量时数据恢复原样
+  sysSetVariableInt(sysvar::MyNamespace::syLight,0);
+  sysSetVariableInt(sysvar::MyNamespace::syLight1,0);
+  sysSetVariableInt(sysvar::MyNamespace::syLight2,0);
+  sysSetVariableInt(sysvar::MyNamespace::syLight3,0);
+  sysSetVariableInt(sysvar::MyNamespace::syLight4,0);
+  sysSetVariableInt(sysvar::MyNamespace::syLight5,0);
+  sysSetVariableInt(sysvar::MyNamespace::syLight6,0);
+  sysSetVariableInt(sysvar::MyNamespace::syLight7,0);
+  sysSetVariableInt(sysvar::MyNamespace::testlight,0);  
+}
+
+ on timer timer1
+{
+  message Msg1 msg1;
+  
+  int a = 0,b;
+  
+  if(b=a%2)
+  {
+    write("testlight的值为:%d\n",b);
+    msg1.bsSwitch =b;
+    output(msg1);
+  }
+  else{
+    write("testlight的值为:%d\n",b);
+    msg1.bsSwitch =b;
+    output(msg1);
+  }
+  a++;
+  setTimer(timer1,500);
+}
+
+
+on timer timer2
+{
+
+  message Msg2 msg2;
+  
+  int b = 1;
+  
+  msg2.bsData = b;
+  
+  output(msg2);
+  write("执行Timer2函数并取消Timer1");
+  cancelTimer(timer3);
+  cancelTimer(timer1);
+}
+
+
+on timer timer3
+{
+   int i=0;
+   if(i==8)
+   {
+      i=0;
+   }  
+   msg3.byte(0)=i+1;
+   output(msg3);
+   i++;  
+   setTimer(timer3,60);
+   
+}
+
+
